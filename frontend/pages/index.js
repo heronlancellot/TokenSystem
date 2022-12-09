@@ -1,52 +1,79 @@
+import { Contract, providers, utils } from "ethers";
 import Head from 'next/head'
+import React, { useEffect, useRef, useState } from "react";
+import Web3Modal from "web3modal";
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+
+  const [WalletConnected, setWalletConnected] = useState(false);
+  const web3ModalRef = useRef();
+
+  const getProviderOrSigner = async (needSigner = false) => {
+    
+    const provider = await web3ModalRef.current.connect();
+    const web3Provider = new providers.Web3Provider(provider);
+
+    const { chainId } = await web3Provider.getNetwork();
+    if (chainId !== 5) {
+      window.alert("Change the network to Goerli");
+      throw new Error("Change newtork to Goerli");
+    }
+
+    if (needSigner) {
+      const signer = web3Provider.getSigner();
+      return signer;
+    }
+    return web3Provider;
+  };
+
+  const connectWallet = async () => {
+    try {
+      await getProviderOrSigner();
+      setWalletConnected(true);
+    } catch(err){
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if(!WalletConnected) {
+
+      web3ModalRef.current = new Web3Modal({
+        network: "goerli",
+        providerOptions: {},
+        disableInjectedProvider: false,
+      });
+      connectWallet();
+    }
+  }, [WalletConnected]);
+
+  const ButtonMetamask = () => {
+  if(!WalletConnected){
+      return (
+        <button onClick={connectWallet} className={styles.btn}> 
+          Connect your Wallet
+        </button>
+      )
+    };
+  }
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>StreaX</title>
+        <link rel="icon" href="./logo-streax.jpg"/>
       </Head>
+      <div className={styles.metamask}>
+        {ButtonMetamask()}
+      </div>
 
-      <main className={styles.main}>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+      <div className={styles.main}>
+          <h1>Let's fix the communication at Web3</h1>
+      </div>
 
       <footer className={styles.footer}>
-        <a>
-          Powered by{' StreaX'} 
-        </a>
+          Powered by StreaX
       </footer>
     </div>
   )
