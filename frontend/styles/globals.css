@@ -12,13 +12,23 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background: #1F1F38;
+  line-height: 1.7; 
+  background-image: url(../public/bg-texture.png);
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1,h2,h3,h4,h5 {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +37,5 @@ a {
   }
   body {
     color: white;
-    background: rgba(48, 38, 38, 0.589);
   }
 }

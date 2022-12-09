@@ -6,8 +6,26 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
+  const inputValue = useRef(null);
+  const [mintValue, setMintValue] = useState('');
   const [WalletConnected, setWalletConnected] = useState(false);
   const web3ModalRef = useRef();
+
+  const mintClick = () => {
+    setMintValue(inputValue.current.value);
+    var totalSupply = 100;
+
+    // If Value < total Supply ( 10.000 )
+    if(mintValue <= totalSupply && mintValue > 0){
+      window.alert('Mint!');
+      console.log(mintValue);
+      
+    }else{
+      window.alert("Error");
+      console.log('valor error', mintValue);
+    }
+
+  };
 
   const getProviderOrSigner = async (needSigner = false) => {
     
@@ -46,6 +64,9 @@ export default function Home() {
       });
       connectWallet();
     }
+    
+    ButtonMint()
+
   }, [WalletConnected]);
 
   const ButtonMetamask = () => {
@@ -54,6 +75,20 @@ export default function Home() {
         <button onClick={connectWallet} className={styles.btn}> 
           Connect your Wallet
         </button>
+      )
+    };
+  }
+
+  const ButtonMint = () => {
+    if(WalletConnected == true){
+      return (
+        <><input ref={inputValue}
+          type="number"
+          id="message"
+          name="message"
+          min="1"
+          max="10" /><h2>Value: {mintValue}</h2><button onClick={mintClick}>Update</button>
+        </>
       )
     };
   }
@@ -70,6 +105,11 @@ export default function Home() {
 
       <div className={styles.main}>
           <h1>Let's fix the communication at Web3</h1>
+      </div>
+
+      <div className={styles.card}>
+        <h1>Card 1 - Mint STX</h1>
+        {ButtonMint()}
       </div>
 
       <footer className={styles.footer}>

@@ -3,26 +3,39 @@
   justify-content: center;
   align-items: center;
 }
+
+.card {
+  display: grid;
+  justify-content: center;
+  width: max-content;
+  height: 360px;
+  border: 2px solid black;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: auto;
+}
+
 .metamask {
   display: flex;
   justify-content: right;
   padding-top: 2rem;
   padding-right: 6rem;
 }
+
 .btn {
-  background-color: rgba(61, 47, 47, 0.589);
+  background-color: #1F1F38;
   width: max-content;
-  color: white;
+  color: #4db5ff;
   padding: 0.75rem 1.2rem;
   border-radius: 0.4rem;
   cursor: pointer;
-  border: 1px solid black;
+  border: 3px solid #4db5ff;
 }
 
 .btn:hover {
-  background: rgba(48, 38, 38, 0.589);
   color: white;
-  border-color: transparent 2px solid;
+  transition: all 400ms ease;
+  border: 1px solid transparent;
 }
 
 .footer {
