@@ -59,7 +59,7 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>StreaX</title>
         <link rel="icon" href="./logo-streax.jpg"/>
