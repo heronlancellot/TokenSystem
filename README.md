@@ -30,6 +30,16 @@
     ```
     - Environment variables
 
+## Web3modal & ethers
+- Install Web3Modal [frontend]
+    ```
+        npm install web3modal
+    ```
+- Install ethers [frontend]
+    ```
+        npm install ethers
+    ```
+
 - Deploy on Goerli Testnet    
     ```
     npx hardhat run scripts/deploy.js --network goerli <other args>,
