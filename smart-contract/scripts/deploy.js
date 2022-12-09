@@ -2,13 +2,13 @@ const {ethers} = require("hardhat");
 
 async function main() {
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy();
+  const StreaX = await hre.ethers.getContractFactory("StreaX");
+  const DeployedStreaX = await StreaX.deploy();
 
-  await lock.deployed();
+  await DeployedStreaX.deployed();
 
   console.log(
-    `Lock with 1 ETH and unlock timestamp deployed to ${lock.address}`
+    `Deployed to ${DeployedStreaX.address}`
   );
 }
 
