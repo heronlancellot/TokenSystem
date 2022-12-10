@@ -1,6 +1,7 @@
 import { Contract, providers, utils } from "ethers";
 import Head from 'next/head'
 import React, { useEffect, useRef, useState } from "react";
+import { abi, TOKEN_CONTRACT_ADDRESS} from '../constants/index'
 import Web3Modal from "web3modal";
 import styles from '../styles/Home.module.css'
 
@@ -11,18 +12,28 @@ export default function Home() {
   const [WalletConnected, setWalletConnected] = useState(false);
   const web3ModalRef = useRef();
 
-  const mintClick = () => {
-    setMintValue(inputValue.current.value);
-    var totalSupply = 100;
+  const mintClick = async () => {
 
-    // If Value < total Supply ( 10.000 )
-    if(mintValue <= totalSupply && mintValue > 0){
-      window.alert('Mint!');
-      console.log(mintValue);
-      
-    }else{
-      window.alert("Error");
-      console.log('valor error', mintValue);
+    var totalSupply = 100;
+    setMintValue(inputValue.current.value); 
+    try {
+      const signer = await getProviderOrSigner(true);
+      const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, signer);
+      // If Value < total Supply ( 10.000 )
+      if(mintValue <= totalSupply && mintValue > 0){
+        // The quantity is 0.0.000000000000000006  Need Set the mintValue * 10**18
+        const tx = await tokenContract.mint(mintValue);
+        await tx.wait();
+        window.alert(`Mint ${mintValue} StreaX tokens`);
+        console.log(`Mint ${mintValue} StreaX tokens`);
+        
+      }else{
+        window.alert("Error");
+        console.log('valor error', mintValue);
+      }
+    
+    } catch (err) {
+      console.error(err);
     }
 
   };
@@ -110,6 +121,11 @@ export default function Home() {
       <div className={styles.card}>
         <h1>Card 1 - Mint STX</h1>
         {ButtonMint()}
+      </div>
+
+      <div className={styles.card}>
+        <h1>Card 2 - Transfer STX</h1>
+        {`ButtonTransfer()`}
       </div>
 
       <footer className={styles.footer}>

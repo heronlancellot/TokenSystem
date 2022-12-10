@@ -6,13 +6,20 @@
 
 .card {
   display: grid;
+  grid: 400px;
+  grid-template-columns: 400px;
   justify-content: center;
   width: max-content;
   height: 360px;
   border: 2px solid black;
   border-radius: 1rem;
   padding: 2rem;
+  grid-gap: 2rem;
   margin: auto;
+}
+
+.card h1 {
+  color: blue;
 }
 
 .metamask {
