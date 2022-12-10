@@ -2,6 +2,14 @@
 - Create, Issue Tokens, transfer tokens
 - ERC20
 
+# How to use ?
+- Clone the directory
+- Go to 'frontend'
+- Open Terminal in frontend folder and run:
+    ```
+        npm run dev
+    ```
+- Go to localhost:3000 and interact with the system
 
 ## Hardhat
 - Install Hardhat:
