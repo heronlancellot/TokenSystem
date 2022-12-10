@@ -103,8 +103,6 @@ export default function Home() {
       connectWallet();
     }
     
-    ButtonMint()
-
   }, [WalletConnected]);
 
   const ButtonMetamask = () => {
