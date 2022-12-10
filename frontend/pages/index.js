@@ -21,22 +21,19 @@ export default function Home() {
 
   const mintClick = async () => {
 
-    var totalSupply = 100;
     setMintValue(inputMintValue.current.value); 
     try {
       const signer = await getProviderOrSigner(true);
       const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, signer);
-      // If Value < total Supply ( 10.000 )
-      if(mintValue <= totalSupply && mintValue > 0){
-        // The quantity is 0.0.000000000000000006  Need Set the mintValue * 10**18
+      if(mintValue > 0){
+        window.alert(`You will Mint ${mintValue} are you sure?`);
         const tx = await tokenContract.mint(mintValue);
         await tx.wait();
         window.alert(`Mint ${mintValue} StreaX tokens`);
         console.log(`Mint ${mintValue} StreaX tokens`);
-        
       }else{
-        window.alert("Error");
-        console.log('valor error', mintValue);
+        window.alert("Error Mint");
+        console.log(`Value mint Token ERROR: ${mintValue} should be > 0`);
       }
     
     } catch (err) {
@@ -51,9 +48,15 @@ export default function Home() {
     try {
       const signer = await getProviderOrSigner(true);
       const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, signer);
-      const tx = await tokenContract.transfer(addressValue, tokenValue);
-      await tx.wait();
-      /* if to Check If owner (msg.sender) have the amount of token's the will transfer */
+      if(tokenValue > 0){
+        window.alert(`You will Transfer ${tokenValue} to this address ${addressValue} are you sure?`);
+        const tx = await tokenContract.transfer(addressValue, tokenValue);
+        await tx.wait();
+      }else {
+        window.alert("Error Transfer");
+        console.log(`Value transfer ERROR: ${tokenValue} should be > 0`);
+      }
+
     } catch (err){
       console.error(err);
     }
@@ -88,6 +91,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+
     if(!WalletConnected) {
 
       web3ModalRef.current = new Web3Modal({
@@ -103,6 +107,7 @@ export default function Home() {
   }, [WalletConnected]);
 
   const ButtonMetamask = () => {
+
   if(!WalletConnected){
       return (
         <button onClick={connectWallet} className={styles.btn}> 
@@ -113,6 +118,7 @@ export default function Home() {
   }
 
   const ButtonMint = () => {
+
     if(WalletConnected == true){
       return (
         <>
@@ -128,6 +134,7 @@ export default function Home() {
   }
 
   const ButtonTransfer = () => {
+
     if(WalletConnected == true){
       return(
         <>
@@ -149,6 +156,7 @@ export default function Home() {
   }
 
   return (
+
     <div className={styles.container}>
       <Head>
         <title>StreaX</title>
@@ -175,6 +183,7 @@ export default function Home() {
       <footer className={styles.footer}>
           Powered by StreaX
       </footer>
+      
     </div>
   )
 }
