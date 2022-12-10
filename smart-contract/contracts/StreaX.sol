@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract StreaX is ERC20 { 
 
-    // Max Total Supply =  100 StreaX Tokens
-    uint256 public constant maxTotalSupply = 100 * 10**18;
+    // Max Total Supply =  1000 StreaX Tokens
+    uint256 public constant maxTotalSupply = 1000 * 10**18;
 
     uint256 public tokenIds;
 
