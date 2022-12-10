@@ -19,6 +19,8 @@ export default function Home() {
   const [WalletConnected, setWalletConnected] = useState(false);
   const web3ModalRef = useRef();
 
+  const [tokensMinted, setTokensMinted] = useState('');
+
   const mintClick = async () => {
 
     setMintValue(inputMintValue.current.value); 
@@ -86,6 +88,18 @@ export default function Home() {
     return web3Provider;
   };
 
+  const getTotalTokensMinted = async () => {
+
+    try {
+      const provider = await getProviderOrSigner();
+      const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, provider);
+      const _tokensMinted = await tokenContract.totalSupply();
+      setTokensMinted(_tokensMinted);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const connectWallet = async () => {
 
     try {
@@ -106,6 +120,7 @@ export default function Home() {
         disableInjectedProvider: false,
       });
       connectWallet();
+      getTotalTokensMinted();
     }
 
   }, [WalletConnected]);
@@ -159,6 +174,19 @@ export default function Home() {
     };
   }
 
+  const MintMessage = () => {
+    
+    let tokensMintedDecimal = tokensMinted / 10**18;
+
+    if(WalletConnected == true){
+      return(
+      <div>
+        You have minted {tokensMintedDecimal} STX
+      </div>
+      )
+    };
+  }
+
   return (
 
     <div className={styles.container}>
@@ -188,6 +216,7 @@ export default function Home() {
       </div>
 
       <footer className={styles.footer}>
+          {MintMessage()}
           Powered by StreaX
       </footer>
 
