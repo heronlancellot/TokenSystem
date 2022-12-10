@@ -32,9 +32,13 @@ h1 {
 }
 
 button {
+  display: inline-block;
+  background-color: #393966;
   border: solid black 2px;
   border-radius: 1rem;
   cursor: pointer;
+  font-size: 20px;
+  padding: 1rem;
 }
 
 button:hover {
@@ -42,14 +46,19 @@ button:hover {
 }
 
 input  {
+  display: inline-block;
+  padding: 0.5rem;
   border-radius: 1rem;
   border: solid transparent 2px;
+  background-color: #393966;
+  font-size: 20px;
 }
 
 input:hover {
   background-color: #1F1F38;
   border: solid black 2px;
 }
+
 
 @media (prefers-color-scheme: dark) {
   html {

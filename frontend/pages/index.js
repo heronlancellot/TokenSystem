@@ -82,6 +82,7 @@ export default function Home() {
   };
 
   const connectWallet = async () => {
+
     try {
       await getProviderOrSigner();
       setWalletConnected(true);
@@ -122,11 +123,11 @@ export default function Home() {
     if(WalletConnected == true){
       return (
         <>
+        <h2>Value: {mintValue}</h2>
         <input ref={inputMintValue}
           type="number" 
           min="1"
-          max="10" />
-          <h2>Value: {mintValue}</h2>
+          />
           <button onClick={mintClick}>Mint</button>
         </>
       )
@@ -170,20 +171,23 @@ export default function Home() {
           <h1>Let's fix the communication at Web3</h1>
       </div>
 
-      <div className={styles.card}>
-        <h1>Card 1 - Mint STX</h1>
-        {ButtonMint()}
-      </div>
+      <div className={styles.cards}>
 
-      <div className={styles.card}>
-        <h1>Card 2 - Transfer STX</h1>
-        {ButtonTransfer()}
+        <div className={styles.card}>
+          <h1>Card 1 - Mint STX</h1>
+          {ButtonMint()}
+        </div>
+
+        <div className={styles.card}>
+          <h1>Card 2 - Transfer STX</h1>
+          {ButtonTransfer()}
+        </div>
       </div>
 
       <footer className={styles.footer}>
           Powered by StreaX
       </footer>
-      
+
     </div>
   )
 }
