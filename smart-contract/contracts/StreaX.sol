@@ -16,13 +16,17 @@ contract StreaX is ERC20 {
     
     // This function will mint the Token
     function mint(uint256 amount) public payable {
-        require(tokenIds < maxTotalSupply, "The amount to be mined is greater than the total");
-        _mint(msg.sender, amount);
+        uint256 amountDecimals = amount * 10**18;
+        require((totalSupply() + amountDecimals) <= maxTotalSupply,
+        "The amount to be mined is greater than the total"
+        ); 
+        _mint(msg.sender, amountDecimals);
     }
 
     function transfer(address to, uint256 amount) public override returns (bool) {
+        uint256 amountDecimals = amount * 10**18;
         address owner = msg.sender;
-        _transfer(owner, to, amount);
+        _transfer(owner, to, amountDecimals);
         return true;
     }
 
