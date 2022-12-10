@@ -7,15 +7,22 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
 
-  const inputValue = useRef(null);
+  const inputMintValue = useRef(null);
   const [mintValue, setMintValue] = useState('');
+
+  const inputAddressValue = useRef(null);
+  const [addressValue, setAddressValue] = useState('');
+
+  const inputTokenValue = useRef(null);
+  const [tokenValue, setTokenValue] = useState('');
+
   const [WalletConnected, setWalletConnected] = useState(false);
   const web3ModalRef = useRef();
 
   const mintClick = async () => {
 
     var totalSupply = 100;
-    setMintValue(inputValue.current.value); 
+    setMintValue(inputMintValue.current.value); 
     try {
       const signer = await getProviderOrSigner(true);
       const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, signer);
@@ -33,6 +40,21 @@ export default function Home() {
       }
     
     } catch (err) {
+      console.error(err);
+    }
+
+  };
+
+  const transferClick = async () => {
+    setAddressValue(inputAddressValue.current.value);
+    setTokenValue(inputTokenValue.current.value);
+    try {
+      const signer = await getProviderOrSigner(true);
+      const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, signer);
+      const tx = await tokenContract.transfer(addressValue, tokenValue);
+      await tx.wait();
+      /* if to Check If owner (msg.sender) have the amount of token's the will transfer */
+    } catch (err){
       console.error(err);
     }
 
@@ -93,12 +115,34 @@ export default function Home() {
   const ButtonMint = () => {
     if(WalletConnected == true){
       return (
-        <><input ref={inputValue}
-          type="number"
-          id="message"
-          name="message"
+        <>
+        <input ref={inputMintValue}
+          type="number" 
           min="1"
-          max="10" /><h2>Value: {mintValue}</h2><button onClick={mintClick}>Update</button>
+          max="10" />
+          <h2>Value: {mintValue}</h2>
+          <button onClick={mintClick}>Mint</button>
+        </>
+      )
+    };
+  }
+
+  const ButtonTransfer = () => {
+    if(WalletConnected == true){
+      return(
+        <>
+        <h2>Address: {addressValue}</h2>
+        <input ref={inputAddressValue}
+        type="text"   
+        maxlength="42"/> 
+        <h2>Token STX amount: {tokenValue}</h2>
+        <input ref={inputTokenValue}
+          type="number"
+          min="1"
+          max="10" />
+        
+        <button onClick={transferClick}>Transfer</button>
+        
         </>
       )
     };
@@ -125,7 +169,7 @@ export default function Home() {
 
       <div className={styles.card}>
         <h1>Card 2 - Transfer STX</h1>
-        {`ButtonTransfer()`}
+        {ButtonTransfer()}
       </div>
 
       <footer className={styles.footer}>

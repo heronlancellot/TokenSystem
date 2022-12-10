@@ -20,4 +20,10 @@ contract StreaX is ERC20 {
         _mint(msg.sender, amount);
     }
 
+    function transfer(address to, uint256 amount) public override returns (bool) {
+        address owner = msg.sender;
+        _transfer(owner, to, amount);
+        return true;
+    }
+
 }
