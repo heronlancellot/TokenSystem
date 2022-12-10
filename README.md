@@ -49,3 +49,4 @@
         hardhat verify --contract contracts/Example.sol:ExampleContract <other args>
 
     ```
+[Contract Etherscan](https://goerli.etherscan.io/address/0x32408AA5bEa0E00Aa7e178e054b09FA092c6725b#code)
