@@ -35,7 +35,7 @@ export default function Home() {
         window.alert("Error Mint");
         console.log(`Value mint Token ERROR: ${mintValue} should be > 0`);
       }
-    
+      
     } catch (err) {
       console.error(err);
     }
@@ -50,18 +50,23 @@ export default function Home() {
       const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, signer);
       if(tokenValue > 0){
         window.alert(`You will Transfer ${tokenValue} to this address ${addressValue} are you sure?`);
-        const tx = await tokenContract.transfer(addressValue, tokenValue);
-        await tx.wait();
-      }else {
-        window.alert("Error Transfer");
-        console.log(`Value transfer ERROR: ${tokenValue} should be > 0`);
+        const tx = await tokenContract.transfer(addressValue, tokenValue).then(async (tx) => {
+          await tx.wait().then((result) => {
+            console.log("Transaction successful, result: ", result);
+          }).catch(err => {
+            console.log("Transaction reverted, error: ", err);
+          });
+        })
       }
-
-    } catch (err){
-      console.error(err);
+    }catch(err) {
+        window.alert('Transaction will fail, check the console.log for more information')
+        console.log("Transaction will fail, error: ", err);
+        // Code Metamask provider
+        if (err.code === -32603) {
+            console.log("Transaction will revert with reason: ", err.data.message);
+        }
     }
-
-  };
+  }
 
   const getProviderOrSigner = async (needSigner = false) => {
     
@@ -102,7 +107,7 @@ export default function Home() {
       });
       connectWallet();
     }
-    
+
   }, [WalletConnected]);
 
   const ButtonMetamask = () => {
