@@ -215,8 +215,12 @@ export default function Home() {
         </div>
       </div>
 
+      <div className={styles.mint}>
+        {MintMessage()}
+      </div>
+
       <footer className={styles.footer}>
-          {MintMessage()}
+        
           Powered by StreaX
       </footer>
 

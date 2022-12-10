@@ -58,6 +58,12 @@
   border: 1px solid transparent;
 }
 
+.mint {
+  display: flex;
+  justify-content: center;
+  font-size: 21px;
+}
+
 .footer {
   padding: 2rem 0;
   display: flex;
