@@ -21,5 +21,8 @@
   "main": "next.config.js",
   "author": "",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.36.0"
+  }
 }
